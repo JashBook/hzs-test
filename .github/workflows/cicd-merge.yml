@@ -1,0 +1,37 @@
+name: CICD-MERGE
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  make-build:
+    if: github.event.pull_request.merged == true
+    runs-on: [ self-hosted,aws-ec2-k8s-runner ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: make build
+        run: |
+          make mod-vendor
+          make lint
+          make
+  make-test:
+    if: github.event.pull_request.merged == true
+    runs-on: [ self-hosted,aws-ec2-k8s-runner ]
+    needs: [ make-build ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: make test
+        run: |
+          make mod-vendor
+          make test
+  helm-test:
+    if: github.event.pull_request.merged == true
+    runs-on: [ self-hosted,aws-ec2-k8s-runner ]
+    needs: [ make-test ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: helm test
+        run: |
+          make helm-test
