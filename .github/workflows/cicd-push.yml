@@ -10,28 +10,29 @@ jobs:
       - uses: actions/checkout@v3
       - name: make build
         run: |
-          make mod-vendor
-          make lint
-          make
-  make-test:
-    runs-on: [ self-hosted, "${{ github.actor }}" ]
-    needs: [make-build]
-    steps:
-      - uses: actions/checkout@v3
-      - name: make test
-        run: |
-          make mod-vendor
-          make test
-  helm-test:
-    runs-on: [ self-hosted, "${{ github.actor }}" ]
-    needs: [ make-test ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: helm test
-        if: ${{ !env.ACT }}
-        run: |
-          make helm-test
-      - name: helm test local
-        if: ${{ env.ACT }}
-        run: |
-          make helm-test-local
+          echo "${{ github.event.head_commit.message }}"
+#          make mod-vendor
+#          make lint
+#          make
+#  make-test:
+#    runs-on: [ self-hosted, "${{ github.actor }}" ]
+#    needs: [make-build]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: make test
+#        run: |
+#          make mod-vendor
+#          make test
+#  helm-test:
+#    runs-on: [ self-hosted, "${{ github.actor }}" ]
+#    needs: [ make-test ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: helm test
+#        if: ${{ !env.ACT }}
+#        run: |
+#          make helm-test
+#      - name: helm test local
+#        if: ${{ env.ACT }}
+#        run: |
+#          make helm-test-local
