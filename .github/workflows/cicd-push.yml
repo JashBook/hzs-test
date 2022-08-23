@@ -13,7 +13,7 @@ jobs:
 #      contains("${{ github.event.head_commit.message }}", ""pull') &&
 #      contains("${{ github.event.head_commit.message }}", 'request') &&
 #      contains("${{ github.event.head_commit.message }}", '#')
-    if: startsWith(github.event.head_commit.message, 'Merge pull request') != true
+    if: startsWith(github.event.head_commit.message, 'Merge pull request')
 #    if: startsWith("${{ github.event.head_commit.message }}", "Merge")
     runs-on: [self-hosted, "${{ github.actor }}" ]
     steps:
@@ -26,7 +26,7 @@ jobs:
 #          make lint
 #          make
   make-build2:
-      if: startsWith(github.event.head_commit.message, 'Merge pull request')
+      if: startsWith(github.event.head_commit.message, 'Merge pull request') != true
       runs-on: [ self-hosted, "${{ github.actor }}" ]
       steps:
         - uses: actions/checkout@v3
