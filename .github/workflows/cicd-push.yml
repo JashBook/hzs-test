@@ -25,7 +25,7 @@ jobs:
 #          make mod-vendor
 #          make lint
 #          make
-  make-build3:
+  make-build2:
       if: startsWith(github.event.head_commit.message, 'Merge pull request \#')
       runs-on: [ self-hosted, "${{ github.actor }}" ]
       steps:
@@ -33,7 +33,6 @@ jobs:
         - name: make build
           run: |
             echo "${{ github.event.head_commit.message }}"
-            echo "123"
     #          make mod-vendor
     #          make lint
     #          make
