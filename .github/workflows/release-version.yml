@@ -9,7 +9,7 @@ on:
         default: ''
 
 
-run-name: ${{ github.ref_name }}:${{ inputs.release_version }}
+run-name: ref:${{ github.ref_name }} version:${{ inputs.release_version }}
 
 
 jobs:
