@@ -53,6 +53,9 @@ main() {
         6)
             get_trigger_mode
         ;;
+        7)
+            check_image_exists
+        ;;
         *)
             show_help
             break
@@ -161,6 +164,24 @@ get_trigger_mode() {
         esac
     done
     echo $TRIGGER_MODE
+}
+
+check_image_exists() {
+    image=registry.cn-hangzhou.aliyuncs.com/apecloud/configmap-reload:v0.5.0
+    for i in {1..5}; do
+        exists_flag=$(docker manifest inspect "$image" | grep digest)
+        if [[ -z "$exists_flag" ]]; then
+            if [[ $i -lt 5 ]]; then
+                sleep 1
+                continue
+            fi
+        else
+            echo "found $exists_flag"
+            break
+        fi
+        echo "$(tput setaf 1)$image is not exists.$(tput sgr 0)"
+        EXIT_STATUS=1
+    done
 }
 
 main "$@"

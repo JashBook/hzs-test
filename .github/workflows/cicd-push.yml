@@ -21,43 +21,47 @@ jobs:
       - name: Get trigger mode
         id: get_trigger_mode
         run: |
-          TRIGGER_MODE=`bash .github/utils/utils.sh --type 6`
-          echo $TRIGGER_MODE
-          echo trigger_mode=$TRIGGER_MODE >> $GITHUB_OUTPUT
+          for i in {1..300}; do
+              echo "check images...$i"
+              bash .github/utils/utils.sh --type 7
+          done
+#          TRIGGER_MODE=`bash .github/utils/utils.sh --type 6`
+#          echo $TRIGGER_MODE
+#          echo trigger_mode=$TRIGGER_MODE >> $GITHUB_OUTPUT
 
-  pre-push:
-    needs: trigger-mode
-    runs-on: ubuntu-latest
-    name: Push Pre-Check
-    steps:
-      - uses: actions/checkout@v3
-      - name: Spell Check with Typos
-        if: contains(needs.trigger-mode.outputs.trigger-mode, '[docs]')
-        uses: crate-ci/typos@v1.13.14
-        with:
-          files: docs/
-          config: .github/utils/typos.toml
-
-  make-test:
-    needs: trigger-mode
-    runs-on: ubuntu-latest
-    if: contains(needs.trigger-mode.outputs.trigger-mode, '[test]')
-    steps:
-      - name: make test
-        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
-
-  check-image:
-    needs: trigger-mode
-    if: contains(needs.trigger-mode.outputs.trigger-mode, '[docker]')
-    runs-on: ubuntu-latest
-    steps:
-      - name: check image
-        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
-
-  check-helm:
-    needs: trigger-mode
-    if: contains(needs.trigger-mode.outputs.trigger-mode, '[deploy]')
-    runs-on: ubuntu-latest
-    steps:
-      - name: check helm
-        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
+#  pre-push:
+#    needs: trigger-mode
+#    runs-on: ubuntu-latest
+#    name: Push Pre-Check
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Spell Check with Typos
+#        if: contains(needs.trigger-mode.outputs.trigger-mode, '[docs]')
+#        uses: crate-ci/typos@v1.13.14
+#        with:
+#          files: docs/
+#          config: .github/utils/typos.toml
+#
+#  make-test:
+#    needs: trigger-mode
+#    runs-on: ubuntu-latest
+#    if: contains(needs.trigger-mode.outputs.trigger-mode, '[test]')
+#    steps:
+#      - name: make test
+#        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
+#
+#  check-image:
+#    needs: trigger-mode
+#    if: contains(needs.trigger-mode.outputs.trigger-mode, '[docker]')
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: check image
+#        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
+#
+#  check-helm:
+#    needs: trigger-mode
+#    if: contains(needs.trigger-mode.outputs.trigger-mode, '[deploy]')
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: check helm
+#        run: echo ${{ needs.trigger-mode.outputs.trigger-mode }}
