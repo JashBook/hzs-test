@@ -16,15 +16,26 @@ jobs:
       trigger-mode: ${{ steps.get_trigger_mode.outputs.trigger_mode }}
     steps:
       - uses: actions/checkout@v3
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run commands
+        id: runcmd
         with:
-          fetch-depth: 2
-      - name: Get trigger mode
-        id: get_trigger_mode
+          arch: armv7
+          distro: ubuntu18.04
+
+          # Not required, but speeds up builds by storing container images in
+          # a GitHub package registry.
+          githubToken: ${{ github.token }}
+
+          # Set an output parameter `uname` for use in subsequent steps
+          run: |
+            uname -a
+            echo ::set-output name=uname::$(uname -a)
+
+      - name: Get the output
+        # Echo the `uname` output parameter from the `runcmd` step
         run: |
-          for i in {1..300}; do
-              echo "check images...$i"
-              bash .github/utils/utils.sh --type 7
-          done
+          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
 #          TRIGGER_MODE=`bash .github/utils/utils.sh --type 6`
 #          echo $TRIGGER_MODE
 #          echo trigger_mode=$TRIGGER_MODE >> $GITHUB_OUTPUT
