@@ -7,7 +7,8 @@ on:
       - '*/*'
     tags-ignore:
       - '*'
-
+env:
+  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 jobs:
   trigger-mode:
@@ -30,7 +31,11 @@ jobs:
 #            apt-get install -y --no-install-recommends docker.io
 #            docker pull busybox
 #            docker inspect busybox
-
+      - name: Push cli doc changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ env.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       - name: TRIGGER_MODE
         run: |
           TRIGGER_MODE=`bash .github/utils/utils.sh --type 6`
