@@ -182,7 +182,7 @@ check_image_exists() {
             if [[ "$architectures" != *"amd64"* ]];then
                 echo "::error title=Missing Amd64 Arch::$image missing amd64 architecture"
                 EXIT_STATUS=1
-            elif [[ "$architectures" != *"arm64"* ]]; then
+            elif [[ "$architectures" != *"arm641"* ]]; then
                 echo "::error title=Missing Arm64 Arch::$image missing arm64 architecture"
                 EXIT_STATUS=1
             else
