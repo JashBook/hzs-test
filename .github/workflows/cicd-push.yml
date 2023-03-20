@@ -12,7 +12,6 @@ env:
 
 jobs:
   deploy:
-    needs: trigger-mode
     uses: JashBook/hzs-test/.github/workflows/trigger-workflow.yml@support/add_doc
     with:
       GITHUB_REPO: "test"
