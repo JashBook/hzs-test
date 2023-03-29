@@ -1,6 +1,6 @@
 name: CICD-PUSH
 
-#on:
+on:
 #  push:
 #    branches:
 #      - '*'
