@@ -28,10 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: merge releasing to release
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
-          git fetch origin release-0.4
           git switch release-0.4
           git merge ${{ github.ref_name }}
           git push --set-upstream origin release-0.4
