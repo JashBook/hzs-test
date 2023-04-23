@@ -33,11 +33,12 @@ jobs:
         id: merge-releasing
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
-          git switch release-0.4
-          git merge ${{ github.ref_name }}
-          FILE_CHANGES=`git diff --name-only release-0.4..origin/release-0.4`
-          echo ${FILE_CHANGES}
           BASE_BRANCH=release-0.4
+          git switch ${BASE_BRANCH}
+          git merge ${{ github.ref_name }}
+          FILE_CHANGES=`git diff --name-only ${BASE_BRANCH}..origin/${BASE_BRANCH}`
+          echo ${FILE_CHANGES}
+          
           echo file_changes=$FILE_CHANGES >> $GITHUB_OUTPUT
           echo base_branch=$BASE_BRANCH >> $GITHUB_OUTPUT
 
