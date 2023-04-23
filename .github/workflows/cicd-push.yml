@@ -31,9 +31,9 @@ jobs:
       - name: merge releasing to release
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
-          git checkout -b release-0.3
+          git checkout -b release-0.4
           git merge ${{ github.ref_name }}
-          git push --set-upstream origin release-0.3
+          git push --set-upstream origin release-0.4
 
 #  test-macos-docker:
 #    runs-on: macos-latest
