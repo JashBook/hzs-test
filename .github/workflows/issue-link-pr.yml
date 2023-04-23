@@ -33,4 +33,3 @@ jobs:
             ${{ github.repository_owner }} \
             ${{ github.event.pull_request.number }} \
             "${{ github.event.pull_request.title }}"
-
