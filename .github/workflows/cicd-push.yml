@@ -31,9 +31,8 @@ jobs:
       - name: merge releasing to release
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
-          git checkout -b release-0.4
-          git config pull.rebase false
-          git pull origin release-0.4
+          git fetch
+          git switch release-0.4
           git merge origin/${{ github.ref_name }}
           git push --set-upstream origin release-0.4
 
