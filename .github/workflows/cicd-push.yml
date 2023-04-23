@@ -33,6 +33,7 @@ jobs:
         run: |
           git fetch
           git switch release-0.4
+          git merge origin/release-0.4
           git merge origin/${{ github.ref_name }}
           git push --set-upstream origin release-0.4
 
