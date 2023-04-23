@@ -35,7 +35,7 @@ jobs:
         run: |
           git switch release-0.4
           git merge ${{ github.ref_name }}
-          git push --set-upstream origin release-0.4
+          git push
 
 #  test-macos-docker:
 #    runs-on: macos-latest
