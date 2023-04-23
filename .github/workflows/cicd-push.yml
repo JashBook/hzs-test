@@ -22,7 +22,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
 
-
 jobs:
   merge-relase:
     runs-on: ubuntu-latest
@@ -34,8 +33,11 @@ jobs:
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
           git switch release-0.4
+          FILE_CHANGES=`git diff --name-only HEAD`
+          echo ${FILE_CHANGES}
           git merge ${{ github.ref_name }}
           git push
+          
 
 #  test-macos-docker:
 #    runs-on: macos-latest
