@@ -32,6 +32,7 @@ jobs:
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
           git checkout -b release-0.4
+          git pull origin release-0.4
           git merge ${{ github.ref_name }}
           git push --set-upstream origin release-0.4
 
