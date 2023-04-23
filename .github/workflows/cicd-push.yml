@@ -34,7 +34,7 @@ jobs:
           git checkout -b release-0.4
           git config pull.rebase false
           git pull origin release-0.4
-          git merge ${{ github.ref_name }}
+          git merge origin/${{ github.ref_name }}
           git push --set-upstream origin release-0.4
 
 #  test-macos-docker:
