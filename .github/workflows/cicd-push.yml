@@ -31,8 +31,6 @@ jobs:
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
           git checkout -b release-0.3
-          git pull origin release-0.3
-          git switch release-0.3
           git merge ${{ github.ref_name }}
           git push
 
