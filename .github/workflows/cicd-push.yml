@@ -33,7 +33,7 @@ jobs:
           git checkout -b release-0.3
           git pull origin release-0.3
           git switch release-0.3
-          git merge origin/${{ github.ref_name }}
+          git merge ${{ github.ref_name }}
           git push
 
 #  test-macos-docker:
