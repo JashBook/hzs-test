@@ -22,10 +22,10 @@ env:
   EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
 
 jobs:
-  minikube-test:
+  merge-relase:
     runs-on: ubuntu-latest
     steps:
-
+      - uses: actions/checkout@v3
       - name: merge releasing to release
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
