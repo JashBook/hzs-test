@@ -30,13 +30,23 @@ jobs:
         with:
           fetch-depth: 0
       - name: merge releasing to release
+        id: merge-releasing
         if: ${{ startsWith(github.ref_name, 'releasing-') }}
         run: |
           git switch release-0.4
-          FILE_CHANGES=`git diff --name-only HEAD`
-          echo ${FILE_CHANGES}
           git merge ${{ github.ref_name }}
-          git push
+          FILE_CHANGES=`git diff --name-only release-0.4..origin/release-0.4`
+          echo ${FILE_CHANGES}
+          BASE_BRANCH=release-0.4
+          echo file_changes=$FILE_CHANGES >> $GITHUB_OUTPUT
+          echo base_branch=$BASE_BRANCH >> $GITHUB_OUTPUT
+
+      - name: push releasing to release
+        if: ${{ startsWith(github.ref_name, 'releasing-') && steps.merge-releasing.outputs.file_changes }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ env.GITHUB_TOKEN }}
+          branch: ${{ steps.merge-releasing.outputs.base_branch }}
           
 
 #  test-macos-docker:
