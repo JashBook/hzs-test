@@ -71,7 +71,7 @@ jobs:
           fetch-depth: 0
       - name: get base commit id
         id: get_base_commit_id
-        run:
+        run: |
           BASE_COMMIT_ID=$( git rev-list -1 origin/main )
           echo $BASE_COMMIT_ID
           echo base_commit_id=$BASE_COMMIT_ID >> $GITHUB_OUTPUT
