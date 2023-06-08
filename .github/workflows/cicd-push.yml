@@ -68,10 +68,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          clean: false
-      - name: Check filesystem type
+          ref: main
+      - name: get main commit
+        run: git rev-list -1 main
+      - uses: actions/checkout@v3
+      - name: get current commit
         run: |
-          git rev-list -1 origin/main
+          git rev-list -1 ${{ github.ref_name }}
+          echo ${{ github.sha }}
 #          for release in $(echo "${{ inputs.VERSION }}" | sed 's/|/ /g'); do
 #              script -e -c " echo \"$(date "+%Y-%m-%d-%T"):$release\" "
 #          done
