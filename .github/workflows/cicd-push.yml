@@ -63,15 +63,15 @@ jobs:
 #              --user ${{ env.ALIYUN_USER }} \
 #              --password "${{ env.ALIYUN_PASSWORD }}"
 
-
   merge-relase:
     runs-on: ubuntu-latest
     steps:
       - name: Check filesystem type
         run: |
-          for release in $(echo "${{ inputs.VERSION }}" | sed 's/|/ /g'); do
-              script -e -c " echo \"$(date "+%Y-%m-%d-%T"):$release\" "
-          done
+          git rev-list -1 origin/main
+#          for release in $(echo "${{ inputs.VERSION }}" | sed 's/|/ /g'); do
+#              script -e -c " echo \"$(date "+%Y-%m-%d-%T"):$release\" "
+#          done
 #          docker version
 #          echo "$(date "+%Y-%m-%d-%T")"
 #          df -T
