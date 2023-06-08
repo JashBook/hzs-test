@@ -70,13 +70,19 @@ jobs:
         with:
           ref: main
       - name: get main commit
-        run: git rev-list -1 main
+      - name: get base commit id
+        id: get_base_commit_id
+        run:
+          BASE_COMMIT_ID=$( git rev-list -1 main )
+          echo base_commit_id=$BASE_COMMIT_ID >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
       - name: get current commit
         run: |
           git rev-list -1 ${{ github.ref_name }}
           echo ${{ github.sha }}
           git branch
+          
+          git diff --name-only ${{ github.sha }} ${{ steps.get_base_commit_id.outputs.base_commit_id }}
 #          for release in $(echo "${{ inputs.VERSION }}" | sed 's/|/ /g'); do
 #              script -e -c " echo \"$(date "+%Y-%m-%d-%T"):$release\" "
 #          done
