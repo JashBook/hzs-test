@@ -73,7 +73,7 @@ jobs:
         id: get_base_commit_id
         run: |
           test="$(git rev-list ${{ github.ref_name }})"
-          main="$(git rev-list main)"
+          main="$(git rev-list origin/main)"
           for commit1 in $( echo "$test" ); do
             found=0
             for commit2 in $( echo "$main" ); do
