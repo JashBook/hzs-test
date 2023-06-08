@@ -77,7 +77,7 @@ jobs:
           echo base_commit_id=$BASE_COMMIT_ID >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
-          ref: "main|${{ github.ref_name }}"
+          clean: false
       - name: get current commit
         run: |
           git rev-list -1 ${{ github.ref_name }}
