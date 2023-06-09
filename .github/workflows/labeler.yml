@@ -13,10 +13,6 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: add lable
-        run:
-          pr_number=$(github_actions::get_pr_number)
-          github::add_label_to_pr "$pr_number" "size/s"
       - uses: codelytv/pr-size-labeler@v1.8.1
         with:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
