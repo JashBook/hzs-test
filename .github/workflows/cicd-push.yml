@@ -73,8 +73,8 @@ jobs:
         id: get_base_commit_id
         run: |
           find --help
-          find . -type f -name '*_test.go'
-          find . -type d -depth 1
+          # find . -type f -name '*_test.go' -maxdepth 1
+          find . -depth 1 -type d 
           
           
           test="$(git rev-list ${{ github.ref_name }})"
