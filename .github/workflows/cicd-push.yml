@@ -72,6 +72,7 @@ jobs:
       - name: get base commit id
         id: get_base_commit_id
         run: |
+          find --help
           find . -type f -name '*_test.go' -maxdepth '1' 
           find . -type d -depth '1'
           
