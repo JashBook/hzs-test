@@ -74,7 +74,7 @@ jobs:
         run: |
           find --help
           # find . -type f -name '*_test.go' -maxdepth 1
-          find . -depth 1 -type d 
+          find  -depth 1 -type d .
           
           
           test="$(git rev-list ${{ github.ref_name }})"
