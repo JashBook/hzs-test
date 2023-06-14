@@ -29,7 +29,7 @@ jobs:
               --github-token "${{ env.GITHUB_TOKEN }}" \
               --pr-number $pr_number
 
-  size-label-fork:
+  fork-size-label:
     if: github.event.pull_request.head.repo.full_name != github.repository
     uses: apecloud/apecloud-cd/.github/workflows/trigger-workflow.yml@v0.1.1
     with:
