@@ -25,6 +25,7 @@ jobs:
         id: get_trigger_mode
         run: |
           sleep 1000
+          
           echo ${{ github.event.pull_request.base.ref }}
           echo ${{ github.event.pull_request.base.sha }}
           echo ${{ github.event.pull_request.head.ref }}
