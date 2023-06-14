@@ -22,8 +22,8 @@ jobs:
       - name: set size label
         run: |
           pr_number="${{ github.event.pull_request.number }}"
-          if [[ ! -z "${{ input.VERSION }}" ]]; then
-              pr_number=${{ input.VERSION }}
+          if [[ ! -z "${{ inputs.VERSION }}" ]]; then
+              pr_number=${{ inputs.VERSION }}
           fi
           bash .github/utils/utils.sh --type 15 \
               --github-token "${{ env.GITHUB_TOKEN }}" \
