@@ -76,8 +76,8 @@ jobs:
           cp .github/utils/2023-06-18-14_47_08.txt ${file_log}
           echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> ${file_log}
           echo 'FILE_LOG='${file_log} >> $GITHUB_ENV
-          cat.github/utils/2023-06-18-14_47_08.txt|grep '【FAILED】' 
-          test_ret="$( cat.github/utils/2023-06-18-14_47_08.txt|grep '【FAILED】'  )"
+          cat .github/utils/2023-06-18-14_47_08.txt|grep '【FAILED】' 
+          test_ret="$( cat .github/utils/2023-06-18-14_47_08.txt|grep '【FAILED】'  )"
           if [[ -n "$test_ret" ]]; then
               echo "1"
           else
