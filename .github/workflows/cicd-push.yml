@@ -77,7 +77,7 @@ jobs:
           echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> ${file_log}
           echo 'FILE_LOG='${file_log} >> $GITHUB_ENV
           
-          test_ret="$( grep "【FAILED】" .github/utils/2023-06-18-14_47_08.txt ${file_log} )"
+          test_ret="$( grep "【FAILED】" .github/utils/2023-06-18-14_47_08.txt )"
           if [[ -n "$test_ret" ]]; then
               echo "1"
           else
