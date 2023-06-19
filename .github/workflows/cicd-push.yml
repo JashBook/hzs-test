@@ -117,6 +117,8 @@ jobs:
 
       - name: Get runner URL
         run: echo ${{ github.event.stargazers_url }}
+      - name: Get job URL
+        run: echo ${{ jobs.test-result.url }}
 #          runs-url="${{ needs.merge-release.outputs.runs-url }}"
 #          find --help
 #          # find ./* -maxdepth 1 -type f -name '*_test.go'
