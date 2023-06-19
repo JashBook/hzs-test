@@ -63,8 +63,10 @@ jobs:
 #              --user ${{ env.ALIYUN_USER }} \
 #              --password "${{ env.ALIYUN_PASSWORD }}"
 
-  merge-relase:
+  merge-release:
     runs-on: ubuntu-latest
+    outputs:
+      runs-url: ${{ steps.get_base_commit_id.outputs.runs-url }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -72,6 +74,8 @@ jobs:
       - name: get base commit id
         id: get_base_commit_id
         run: |
+          ACTIONS_RUNS_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          echo runs-url="$ACTIONS_RUNS_URL" >> $GITHUB_OUTPUT
           file_log="$(date +%Y-%m-%d-%T)".log
           cp .github/utils/2023-06-18-14_47_08.txt ${file_log}
           echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> ${file_log}
@@ -97,7 +101,15 @@ jobs:
           else
               echo "2"
           fi
-#
+
+  test-result:
+    runs-on: ubuntu-latest
+    needs: merge-release
+    steps:
+      - name: get base commit id
+        run: |
+          TEST_NEEDS="merge-release"
+          runs-url=${{ needs.${TEST_NEEDS}.outputs.runs-url }}
 #
 #          find --help
 #          # find ./* -maxdepth 1 -type f -name '*_test.go'
