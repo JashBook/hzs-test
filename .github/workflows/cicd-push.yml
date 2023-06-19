@@ -109,8 +109,8 @@ jobs:
       - name: get base commit id
         run: |
           TEST_NEEDS="merge-release"
-#          runs-url="${{ needs.merge-release.outputs.runs-url }}"
           echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+#          runs-url="${{ needs.merge-release.outputs.runs-url }}"
 #          find --help
 #          # find ./* -maxdepth 1 -type f -name '*_test.go'
 #          find ./* -maxdepth 1 -type d
