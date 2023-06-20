@@ -75,7 +75,6 @@ jobs:
         id: get_base_commit_id
         run: |
           docker manifest inspect docker.io/apecloud/wal-g:mongo-latest
-          
           ACTIONS_RUNS_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
           echo runs-url="$ACTIONS_RUNS_URL" >> $GITHUB_OUTPUT
           file_log="$(date +%Y-%m-%d-%T)".log
@@ -119,8 +118,8 @@ jobs:
 
       - name: Get runner URL
         run: echo ${{ github.event.stargazers_url }}
-      - name: Get job URL
-        run: echo ${{ jobs.test-result.url }}
+
+
 
 #          runs-url="${{ needs.merge-release.outputs.runs-url }}"
 #          find --help
