@@ -82,7 +82,7 @@ jobs:
       - name: get base commit id
         id: get_base_commit_id
         run: |
-          docker manifest inspect docker.io/apecloud/wal-g:mongo-latest
+          docker manifest inspect registry.cn-hangzhou.aliyuncs.com/apecloud/wal-g:mongo-latest
           ACTIONS_RUNS_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
           echo runs-url="$ACTIONS_RUNS_URL" >> $GITHUB_OUTPUT
           file_log="$(date +%Y-%m-%d-%T)".log
