@@ -486,9 +486,9 @@ set_size_label() {
 }
 
 delete_actions_cache() {
-    gh extension install actions/gh-actions-cache
+    gh extension install actions/gh-actions-cache --force
 
-    gh actions-cache delete --confirm --repo $LATEST_REPO $TAG_NAME
+    gh actions-cache delete --repo $LATEST_REPO $TAG_NAME --confirm
 }
 
 main "$@"
