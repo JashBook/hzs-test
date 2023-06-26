@@ -36,6 +36,28 @@ env:
 
 
 jobs:
+  test-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: touch file
+        run: |
+          touch 123.txt
+          echo "123" >123.txt
+      - name: delete cache
+        run: |
+          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
+      - name: Save Artifact
+        id: cache-artifact-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            123.txt
+          key: key-123
+      - name: delete cache
+        run: |
+          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
+
 #  delete-image:
 #    runs-on: ubuntu-latest
 #    steps:
@@ -64,68 +86,68 @@ jobs:
 #              --user ${{ env.ALIYUN_USER }} \
 #              --password "${{ env.ALIYUN_PASSWORD }}"
 
-  merge-release:
-    runs-on: ubuntu-latest
-    outputs:
-      runs-url: ${{ steps.get_base_commit_id.outputs.runs-url }}
-    steps:
-      - if: ${{ env.DOCKER_USER != '' && env.DOCKER_PASSWORD != '' }}
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: get base commit id
-        id: get_base_commit_id
-        run: |
-          docker manifest inspect registry.cn-hangzhou.aliyuncs.com/apecloud/wal-g:mongo-latest
-          ACTIONS_RUNS_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
-          echo runs-url="$ACTIONS_RUNS_URL" >> $GITHUB_OUTPUT
-          file_log="$(date +%Y-%m-%d-%T)".log
-          cp .github/utils/2023-06-18-14_47_08.txt ${file_log}
-          echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> ${file_log}
-          echo 'FILE_LOG='${file_log} >> $GITHUB_ENV
-          grep '【FAILED】' .github/utils/2023-06-18-14_47_08.txt||true
-          test_ret="$( grep '【FAILED】' .github/utils/2023-06-18-14_47_08.txt||true )"
-          if [[ ! -n "$test_ret" ]]; then
-              echo "1"
-          else
-              echo "2"
-          fi
-          
-          test_ret="$( grep '【FAILED】' "${file_log}"||true )"
-          if [[ ! -n "$test_ret" ]]; then
-              echo "1"
-          else
-              echo "2"
-          fi
-        
-          test_ret="$( grep '【FAILED】' "${FILE_LOG}"||true )"
-          if [[ ! -n "$test_ret" ]]; then
-              echo "1"
-          else
-              echo "2"
-          fi
-
-  test-result:
-    runs-on: ubuntu-latest
-    needs: merge-release
-    steps:
-      - name: get base commit id
-        run: |
-          TEST_NEEDS="merge-release"
-          case $TEST_NEEDS in
-              merge-release)
-                  echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
-              ;;
-          esac
-
-      - name: Get runner URL
-        run: echo ${{ github.event.stargazers_url }}
+#  merge-release:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      runs-url: ${{ steps.get_base_commit_id.outputs.runs-url }}
+#    steps:
+#      - if: ${{ env.DOCKER_USER != '' && env.DOCKER_PASSWORD != '' }}
+#        name: Login to Docker Hub
+#        uses: docker/login-action@v2
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ github.token }}
+#      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#      - name: get base commit id
+#        id: get_base_commit_id
+#        run: |
+#          docker manifest inspect registry.cn-hangzhou.aliyuncs.com/apecloud/wal-g:mongo-latest
+#          ACTIONS_RUNS_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+#          echo runs-url="$ACTIONS_RUNS_URL" >> $GITHUB_OUTPUT
+#          file_log="$(date +%Y-%m-%d-%T)".log
+#          cp .github/utils/2023-06-18-14_47_08.txt ${file_log}
+#          echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> ${file_log}
+#          echo 'FILE_LOG='${file_log} >> $GITHUB_ENV
+#          grep '【FAILED】' .github/utils/2023-06-18-14_47_08.txt||true
+#          test_ret="$( grep '【FAILED】' .github/utils/2023-06-18-14_47_08.txt||true )"
+#          if [[ ! -n "$test_ret" ]]; then
+#              echo "1"
+#          else
+#              echo "2"
+#          fi
+#
+#          test_ret="$( grep '【FAILED】' "${file_log}"||true )"
+#          if [[ ! -n "$test_ret" ]]; then
+#              echo "1"
+#          else
+#              echo "2"
+#          fi
+#
+#          test_ret="$( grep '【FAILED】' "${FILE_LOG}"||true )"
+#          if [[ ! -n "$test_ret" ]]; then
+#              echo "1"
+#          else
+#              echo "2"
+#          fi
+#
+#  test-result:
+#    runs-on: ubuntu-latest
+#    needs: merge-release
+#    steps:
+#      - name: get base commit id
+#        run: |
+#          TEST_NEEDS="merge-release"
+#          case $TEST_NEEDS in
+#              merge-release)
+#                  echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+#              ;;
+#          esac
+#
+#      - name: Get runner URL
+#        run: echo ${{ github.event.stargazers_url }}
 
 
 

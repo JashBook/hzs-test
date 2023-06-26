@@ -103,6 +103,9 @@ main() {
         15)
             set_size_label
         ;;
+        17)
+            delete_actions_cache
+        ;;
         *)
             show_help
             break
@@ -480,6 +483,12 @@ set_size_label() {
         echo "add label:$size_label"
         gh pr edit $PR_NUMBER --repo $LATEST_REPO --add-label "$size_label"
     fi
+}
+
+delete_actions_cache() {
+    gh extension install actions/gh-actions-cache
+
+    gh actions-cache delete --confirm --repo $LATEST_REPO $TAG_NAME
 }
 
 main "$@"
