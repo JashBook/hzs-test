@@ -46,6 +46,7 @@ jobs:
           touch 123.txt
           echo "123" >123.txt
       - name: delete cache
+        continue-on-error: true
         run: |
           bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
       - name: Save Artifact
