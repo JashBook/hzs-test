@@ -1,0 +1,272 @@
+https://github.com/apecloud/kubeblocks/actions/runs/5304205099
+aws eks update-kubeconfig --region cn-northwest-1 --name cicd-eks-yOvbdTG3
+Added new context arn:aws-cn:eks:cn-northwest-1:452418721058:cluster/cicd-eks-yOvbdTG3 to /home/runner/.kube/config
+kubeblocks_version:0.6.0-alpha.18
+bash test/kbcli/test_kbcli.sh --type 0 --version 0.6.0-alpha.18 --model "s|c|r|m" --config-s3 true --upgrade true  --aws-access-key-id *** --aws-secret-access-key *** 
+download kbcli
+[1;30m
+      [37m`curl -fsSL https://kubeblocks.io/installer/install_cli.sh | bash -s v0.6.0-alpha.18`(B[m
+    [0m
+Your system is linux_amd64
+Installing kbcli ...
+
+Downloading ...
+kbcli installed successfully.
+Kubernetes: v1.25.10-eks-c12679a
+kbcli: 0.6.0-alpha.18
+Make sure your docker service is running and begin your journey with kbcli:
+
+	kbcli playground init
+
+
+For more information on how to get started, please visit:
+  https://kubeblocks.io
+Kubernetes: v1.25.10-eks-c12679a
+kbcli: 0.6.0-alpha.18
+Kubernetes Env: v1.25.10-eks-c12679a
+kubeblocks version is:
+install kubeblocks
+[1;30m
+      [37m`kbcli kubeblocks install --create-namespace --version 0.6.0-alpha.18  --namespace default `(B[m
+    [0m
+Kubernetes version 1.25.10
+Kubernetes provider EKS
+kbcli version 0.6.0-alpha.18
+[?25h[?25h[?25h
+[?25h[?25h[?25h
+
+KubeBlocks 0.6.0-alpha.18 installed to namespace default SUCCESSFULLY!
+
+-> Basic commands for cluster:
+    kbcli cluster create -h     # help information about creating a database cluster
+    kbcli cluster list          # list all database clusters
+    kbcli cluster describe <cluster name>  # get cluster information
+
+-> Uninstall KubeBlocks:
+    kbcli kubeblocks uninstall
+
+-> To view the monitoring add-ons web console:
+    kbcli dashboard list        # list all monitoring web consoles
+    kbcli dashboard open <name> # open the web console in the default browser
+[?25h[?25hcheck kubeblocks status...
+check kubeblocks resources status
+[1;30m
+      [37m`kbcli kubeblocks status`(B[m
+    [0m
+KubeBlocks is deployed in namespace: default,version: 0.6.0-alpha.18
+
+Kubernetes Cluster:
+VERSION                PROVIDER   REGION           AVAILABLE ZONES                                   
+v1.25.10-eks-c12679a   EKS        cn-northwest-1   cn-northwest-1a,cn-northwest-1b,cn-northwest-1c   
+
+KubeBlocks Workloads:
+NAMESPACE   KIND          NAME                                    READY PODS   CPU(CORES)   MEMORY(BYTES)   CREATED-AT                   
+default     Deployment    kb-addon-alertmanager-webhook-adaptor   [32m1/1[0m          N/A          N/A             Jun 18,2023 14:49 UTC+0000   
+default     Deployment    kb-addon-grafana                        [32m1/1[0m          N/A          N/A             Jun 18,2023 14:49 UTC+0000   
+default     Deployment    kb-addon-snapshot-controller            [32m1/1[0m          N/A          N/A             Jun 18,2023 14:49 UTC+0000   
+default     Deployment    kubeblocks                              [32m1/1[0m          N/A          N/A             Jun 18,2023 14:48 UTC+0000   
+default     StatefulSet   kb-addon-prometheus-alertmanager        [32m1/1[0m          N/A          N/A             Jun 18,2023 14:49 UTC+0000   
+default     StatefulSet   kb-addon-prometheus-server              [32m1/1[0m          N/A          N/A             Jun 18,2023 14:49 UTC+0000   
+
+KubeBlocks Addons:
+NAME                           STATUS     TYPE   PROVIDER    
+agamotto                       [2mDisabled[0m   Helm   community   
+alertmanager-webhook-adaptor   [32mEnabled[0m    Helm   apecloud    
+apecloud-mysql                 [32mEnabled[0m    Helm   apecloud    
+aws-load-balancer-controller   [2mDisabled[0m   Helm   N/A         
+chaos-mesh                     [2mDisabled[0m   Helm   community   
+csi-hostpath-driver            [2mDisabled[0m   Helm   community   
+csi-s3                         [2mDisabled[0m   Helm   community   
+grafana                        [32mEnabled[0m    Helm   community   
+kubeblocks-csi-driver          [2mDisabled[0m   Helm   N/A         
+loki                           [2mDisabled[0m   Helm   community   
+migration                      [2mDisabled[0m   Helm   community   
+milvus                         [2mDisabled[0m   Helm   community   
+mongodb                        [32mEnabled[0m    Helm   community   
+nyancat                        [2mDisabled[0m   Helm   apecloud    
+opensearch                     [2mDisabled[0m   Helm   community   
+postgresql                     [32mEnabled[0m    Helm   community   
+prometheus                     [32mEnabled[0m    Helm   community   
+qdrant                         [2mDisabled[0m   Helm   community   
+redis                          [32mEnabled[0m    Helm   community   
+snapshot-controller            [32mEnabled[0m    Helm   community   
+weaviate                       [2mDisabled[0m   Helm   community   
+[32mcheck kubeblocks resources status done(B[m
+kubeblocks version is:0.6.0-alpha.18
+[1;30m
+      [37m` kbcli addon list `(B[m
+    [0m
+NAME                           TYPE   STATUS     EXTRAS                            AUTO-INSTALL   AUTO-INSTALLABLE-SELECTOR                                                
+agamotto                       Helm   Disabled                                     false                                                                                   
+aws-load-balancer-controller   Helm   Disabled                                     false          {key=KubeGitVersion,op=Contains,values=[eks]}                            
+chaos-mesh                     Helm   Disabled   chaosDaemon,dashboard,dnsServer   false                                                                                   
+csi-hostpath-driver            Helm   Disabled                                     false          {key=KubeGitVersion,op=DoesNotContain,values=[eks aliyun gke tke aks]}   
+csi-s3                         Helm   Disabled   daemonset                         false                                                                                   
+kubeblocks-csi-driver          Helm   Disabled   node                              false          {key=KubeGitVersion,op=Contains,values=[eks]}                            
+loki                           Helm   Disabled                                     false                                                                                   
+migration                      Helm   Disabled                                     false                                                                                   
+milvus                         Helm   Disabled                                     false                                                                                   
+nyancat                        Helm   Disabled                                     false                                                                                   
+opensearch                     Helm   Disabled                                     false                                                                                   
+qdrant                         Helm   Disabled                                     false                                                                                   
+weaviate                       Helm   Disabled                                     false                                                                                   
+alertmanager-webhook-adaptor   Helm   Enabled                                      true                                                                                    
+apecloud-mysql                 Helm   Enabled                                      true                                                                                    
+grafana                        Helm   Enabled                                      true                                                                                    
+mongodb                        Helm   Enabled                                      true                                                                                    
+postgresql                     Helm   Enabled                                      true                                                                                    
+prometheus                     Helm   Enabled    alertmanager                      true                                                                                    
+redis                          Helm   Enabled                                      true                                                                                    
+snapshot-controller            Helm   Enabled                                      true           {key=KubeGitVersion,op=DoesNotContain,values=[tke]}                      
+check addon status
+agamotto status is:[33mDisabled(B[m
+aws-load-balancer-controller status is:[33mDisabled(B[m
+chaos-mesh status is:[33mDisabled(B[m
+csi-hostpath-driver status is:[33mDisabled(B[m
+csi-s3 status is:[33mDisabled(B[m
+kubeblocks-csi-driver status is:[33mDisabled(B[m
+loki status is:[33mDisabled(B[m
+migration status is:[33mDisabled(B[m
+milvus status is:[33mDisabled(B[m
+nyancat status is:[33mDisabled(B[m
+opensearch status is:[33mDisabled(B[m
+qdrant status is:[33mDisabled(B[m
+weaviate status is:[33mDisabled(B[m
+alertmanager-webhook-adaptor status is:[33mEnabled(B[m
+apecloud-mysql status is:[33mEnabled(B[m
+grafana status is:[33mEnabled(B[m
+mongodb status is:[33mEnabled(B[m
+postgresql status is:[33mEnabled(B[m
+prometheus status is:[33mEnabled(B[m
+redis status is:[33mEnabled(B[m
+snapshot-controller status is:[33mEnabled(B[m
+[32mcheck addons status done(B[m
+[1;30m
+      [37m`kbcli addon disable csi-hostpath-driver `(B[m
+    [0m
+addons.extensions.kubeblocks.io/csi-hostpath-driver is already disabled
+[1;30m
+      [37m`kbcli addon disable redis `(B[m
+    [0m
+addon.extensions.kubeblocks.io/redis disabled
+check addon status
+csi-hostpath-driver status is:[33mDisabled(B[m
+[1;30m
+      [37m`kbcli addon describe csi-hostpath-driver`(B[m
+    [0m
+Name:               csi-hostpath-driver
+Description:        Container Storage Interface (CSI) driver for HostPath volumes
+Labels:             kubeblocks.io/provider=community
+Type:               Helm
+Status:             Disabled
+Auto-install:       false
+Auto-install selector:{key=KubeGitVersion,op=DoesNotContain,values=[eks aliyun gke tke aks]}
+
+Default install selector: NONE	
+NAME   REPLICAS   STORAGE   CPU (REQ/LIMIT)   MEMORY (REQ/LIMIT)   STORAGE-CLASS   TOLERATIONS                                                                         PV-ENABLED   
+main                        /                 /                                    [{"effect":"NoSchedule","key":"kb-controller","operator":"Equal","value":"true"}]                
+
+redis status is:[33mDisabling(B[m
+redis status is:[33mDisabled(B[m
+[1;30m
+      [37m`kbcli addon describe redis`(B[m
+    [0m
+Name:               redis
+Description:        Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+Labels:             kubeblocks.io/provider=community
+Type:               Helm
+Status:             Disabled
+Auto-install:       true
+
+Default install selector: NONE	
+NAME   REPLICAS   STORAGE   CPU (REQ/LIMIT)   MEMORY (REQ/LIMIT)   STORAGE-CLASS   TOLERATIONS   PV-ENABLED   
+main                        /                 /                                                               
+
+[32mcheck addons status done(B[m
+[1;30m
+      [37m`kbcli addon enable csi-hostpath-driver `(B[m
+    [0m
+[1;30m
+      [37m`kbcli addon enable redis `(B[m
+    [0m
+addon.extensions.kubeblocks.io/redis enabled
+check addon status
+csi-hostpath-driver status is:[33mDisabled(B[m
+[1;30m
+      [37m`kbcli addon describe csi-hostpath-driver`(B[m
+    [0m
+Name:               csi-hostpath-driver
+Description:        Container Storage Interface (CSI) driver for HostPath volumes
+Labels:             kubeblocks.io/provider=community
+Type:               Helm
+Status:             Disabled
+Auto-install:       false
+Auto-install selector:{key=KubeGitVersion,op=DoesNotContain,values=[eks aliyun gke tke aks]}
+
+Default install selector: NONE	
+NAME   REPLICAS   STORAGE   CPU (REQ/LIMIT)   MEMORY (REQ/LIMIT)   STORAGE-CLASS   TOLERATIONS                                                                         PV-ENABLED   
+main                        /                 /                                    [{"effect":"NoSchedule","key":"kb-controller","operator":"Equal","value":"true"}]                
+
+redis status is:[33mEnabling(B[m
+redis status is:[33mEnabled(B[m
+[1;30m
+      [37m`kbcli addon describe redis`(B[m
+    [0m
+Name:               redis
+Description:        Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+Labels:             kubeblocks.io/provider=community
+Type:               Helm
+Status:             Enabled
+Auto-install:       true
+
+Installed Info:
+
+NAME   REPLICAS   STORAGE   CPU (REQ/LIMIT)   MEMORY (REQ/LIMIT)   STORAGE-CLASS   TOLERATIONS   PV-ENABLED   
+main                        /                 /                                                               
+[32mcheck addons status done(B[m
+[1;30m
+      [37m`kbcli kubeblocks config --set cloudProvider.name=aws             --set cloudProvider.accessKey=***             --set cloudProvider.secretKey=***             --set cloudProvider.region=***             --set cloudProvider.bucket=***             --set dataProtection.backupPVCName=logfile-backup-data             --set dataProtection.backupPVCStorageClassName=csi-s3 `(B[m
+    [0m
+Current KubeBlocks version {0.6.0-alpha.18 v1.25.10-eks-c12679a 0.6.0-alpha.18}.
+[?25h[?25h
+KubeBlocks has been upgraded  SUCCESSFULLY!
+
+-> Basic commands for cluster:
+    kbcli cluster create -h     # help information about creating a database cluster
+    kbcli cluster list          # list all database clusters
+    kbcli cluster describe <cluster name>  # get cluster information
+
+-> Uninstall KubeBlocks:
+    kbcli kubeblocks uninstall
+
+-> To view the monitoring add-ons web console:
+    kbcli dashboard list        # list all monitoring web consoles
+    kbcli dashboard open <name> # open the web console in the default browser
+[?25h[?25h[1;30m
+      [37m`kbcli addon disable csi-s3 `(B[m
+    [0m
+addons.extensions.kubeblocks.io/csi-s3 is already disabled
+[1;30m
+      [37m`kbcli addon enable csi-s3`(B[m
+    [0m
+addon.extensions.kubeblocks.io/csi-s3 enabled
+check addon status
+csi-s3 status is:[33mEnabling(B[m
+csi-s3 status is:[33mEnabling(B[m
+csi-s3 status is:[33mEnabled(B[m
+[1;30m
+      [37m`kbcli addon describe csi-s3`(B[m
+    [0m
+Name:               csi-s3
+Description:        Container Storage Interface (CSI) driver for S3 volumes
+Labels:             kubeblocks.io/provider=community
+Type:               Helm
+Extras:             daemonset
+Status:             Enabled
+Auto-install:       false
+
+Installed Info:
+
+NAME   REPLICAS   STORAGE   CPU (REQ/LIMIT)   MEMORY (REQ/LIMIT)   STORAGE-CLASS   TOLERATIONS                                                                         PV-ENABLED   
+main                        /                 /                                    [{"effect":"NoSchedule","key":"kb-controller","operator":"Equal","value":"true"}]                
+[32mcheck addons status done(B[m
