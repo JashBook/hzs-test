@@ -47,6 +47,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: touch file
         run: |
+          docker manifest inspect docker.io/apecloud/curl-jq:latest
           docker pull docker.io/apecloud/curl-jq:latest
           touch 123.txt
           echo "123" >123.txt
