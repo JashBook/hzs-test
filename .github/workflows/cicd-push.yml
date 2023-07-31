@@ -40,9 +40,15 @@ jobs:
   test-cache:
     runs-on: ubuntu-latest
     steps:
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: image=moby/buildkit:master
       - uses: actions/checkout@v3
       - name: touch file
         run: |
+          docker manifest inspect docker.io/apecloud/curl-jq:latest
+          docker pull docker.io/apecloud/curl-jq:latest
           touch 123.txt
           echo "123" >123.txt
       - name: delete cache
