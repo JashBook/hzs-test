@@ -37,34 +37,40 @@ env:
 
 
 jobs:
-  test-cache:
+  test-comment-cherry-pick:
     runs-on: ubuntu-latest
     steps:
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
-        with:
-          driver-opts: image=moby/buildkit:master
-      - uses: actions/checkout@v3
-      - name: touch file
+      - name: test-comment-cherry-pick
         run: |
-          docker manifest inspect docker.io/apecloud/curl-jq:latest
-          docker pull docker.io/apecloud/curl-jq:latest
-          touch 123.txt
-          echo "123" >123.txt
-      - name: delete cache
-        continue-on-error: true
-        run: |
-          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
-      - name: Save Artifact
-        id: cache-artifact-save
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            123.txt
-          key: key-123
-      - name: delete cache
-        run: |
-          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
+          echo "test-comment-cherry-pick"
+#  test-cache:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: docker/setup-qemu-action@v2
+#      - uses: docker/setup-buildx-action@v2
+#        with:
+#          driver-opts: image=moby/buildkit:master
+#      - uses: actions/checkout@v3
+#      - name: touch file
+#        run: |
+#          docker manifest inspect docker.io/apecloud/curl-jq:latest
+#          docker pull docker.io/apecloud/curl-jq:latest
+#          touch 123.txt
+#          echo "123" >123.txt
+#      - name: delete cache
+#        continue-on-error: true
+#        run: |
+#          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
+#      - name: Save Artifact
+#        id: cache-artifact-save
+#        uses: actions/cache/save@v3
+#        with:
+#          path: |
+#            123.txt
+#          key: key-123
+#      - name: delete cache
+#        run: |
+#          bash ${{ github.workspace }}/.github/utils/utils.sh --type 17 --tag-name key-123
 
 #  delete-image:
 #    runs-on: ubuntu-latest
