@@ -1,9 +1,7 @@
-name: Cherry Pick On Comment
+name: CHERRY-PICK
 on:
   issue_comment:
     types: [created]
-
-
 
 
 jobs:
@@ -12,11 +10,10 @@ jobs:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/cherry-pick')
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+          fetch-depth: 0
 
       - name: Automatic Cherry Pick
         uses: vendoo/gha-cherry-pick@v1
