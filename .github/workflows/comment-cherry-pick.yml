@@ -16,6 +16,6 @@ jobs:
           fetch-depth: 0
 
       - name: Automatic Cherry Pick
-        uses: JashBook/gha-cherry-pick@master
+        uses: apecloud/gha-cherry-pick@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
