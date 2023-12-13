@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: test-comment-cherry-pick
         run: |
+          yq --version
+          yq --help
           echo "test-comment-cherry-pick1"
           echo "test-comment-cherry-pick2"
           echo "test-comment-cherry-pick3"
