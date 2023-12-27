@@ -26,6 +26,4 @@ save_dirs=(usr lib var bin sbin etc/ssl etc/init.d etc/alternatives etc/apt)
 
 rm -fr /usr/local/lib/python*
 
-busybox sh -c "(find ${save_dirs[*]} -not -type d && cat /exclude /exclude && echo exclude) | sort | uniq -u | xargs busybox rm"
-busybox --install -s
-busybox sh -c "find ${save_dirs[*]} -type d -depth -exec rmdir -p {}; 2> /dev/null"
+/bin/busybox sh -c "ls /bin/busybox"
