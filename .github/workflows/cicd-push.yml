@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: test-comment-cherry-pick
         run: |
-          bash ${{ github.workspace }}/.github/utils/compress_build.sh
+          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
