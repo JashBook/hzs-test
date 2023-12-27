@@ -42,11 +42,20 @@ jobs:
     steps:
       - name: test-comment-cherry-pick
         run: |
-          yq --version
-          yq --help
-          echo "test-comment-cherry-pick1"
-          echo "test-comment-cherry-pick2"
-          echo "test-comment-cherry-pick3"
+          apt-get update
+          apt-get install -y busybox xz-utils
+          apt-get clean
+          
+          rm -rf /var/lib/apt/lists/* /var/cache/debconf/* /usr/share/doc /usr/share/man /etc/rc?.d /etc/systemd
+          ln -snf busybox /bin/sh
+          
+          wwhich busybox
+          ls /bin/busybox
+#          yq --version
+#          yq --help
+#          echo "test-comment-cherry-pick1"
+#          echo "test-comment-cherry-pick2"
+#          echo "test-comment-cherry-pick3"
 #  test-cache:
 #    runs-on: ubuntu-latest
 #    steps:
