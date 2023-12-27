@@ -42,15 +42,7 @@ jobs:
     steps:
       - name: test-comment-cherry-pick
         run: |
-          sudo apt-get update
-          sudo apt-get install -y busybox xz-utils
-          sudo apt-get clean
-          
-          sudo rm -rf /var/lib/apt/lists/* /var/cache/debconf/* /usr/share/doc /usr/share/man /etc/rc?.d /etc/systemd
-          sudo ln -snf busybox /bin/sh
-          
-          which busybox
-          ls /bin/busybox
+          bash /builddeps/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
