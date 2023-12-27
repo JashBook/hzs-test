@@ -40,6 +40,7 @@ jobs:
   test-comment-cherry-pick:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: test-comment-cherry-pick
         run: |
           bash ${{ github.workspace }}/.github/utils/compress_build.sh
