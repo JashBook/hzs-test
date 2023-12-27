@@ -23,7 +23,6 @@ libs+=(/lib/ld-linux-"$darch".so.* \
 
 find /etc/alternatives -xtype l -delete
 save_dirs=(usr lib var bin sbin etc/ssl etc/init.d etc/alternatives etc/apt)
-XZ_OPT=-e9v tar -X /exclude -cpJf a.tar.xz "${save_dirs[@]}"
 
 rm -fr /usr/local/lib/python*
 
