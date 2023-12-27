@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: test-comment-cherry-pick
         run: |
-          bash /builddeps/compress_build.sh
+          bash .github/utils/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
