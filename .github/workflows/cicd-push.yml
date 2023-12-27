@@ -42,7 +42,6 @@ jobs:
     steps:
       - name: test-comment-cherry-pick
         run: |
-          bash /builddeps/compress_build.sh
           sudo apt-get update
           sudo apt-get install -y busybox xz-utils
           sudo apt-get clean
