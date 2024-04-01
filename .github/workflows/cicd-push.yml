@@ -40,11 +40,15 @@ jobs:
   test-comment-cherry-pick:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: test-comment-cherry-pick
         run: |
-          echo "test-comment-cherry-pick1"
-          echo "test-comment-cherry-pick2"
-          echo "test-comment-cherry-pick3"
+          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
+#          yq --version
+#          yq --help
+#          echo "test-comment-cherry-pick1"
+#          echo "test-comment-cherry-pick2"
+#          echo "test-comment-cherry-pick3"
 #  test-cache:
 #    runs-on: ubuntu-latest
 #    steps:
