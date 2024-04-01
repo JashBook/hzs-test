@@ -110,6 +110,7 @@ jobs:
         if: |
           github.event.action == 'published'
         run: |
+          RELEASE_BODY=$(echo ${{ github.event.release.body }} | sed 's/"/\\"/g')
           cd ${{ github.workspace }}
           bash ${{ github.workspace }}/.github/utils/issue-release.sh \
             ${{ env.GITHUB_TOKEN }} \
@@ -117,4 +118,4 @@ jobs:
             ${{ github.repository_owner }} \
             $PROJECT_ID $STATUS_FIELD_ID \
             ${{ env.TODO_OPTION_ID }} \
-            "${{ github.event.release.body }}"
+            "${RELEASE_BODY}"
