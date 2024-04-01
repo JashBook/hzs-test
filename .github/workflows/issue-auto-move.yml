@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Get project data
         env:
-          ORGANIZATION: JashBook
+          USER: JashBook
           PROJECT_NUMBER: 3
         run: |
           gh api graphql -f query='
             query($org: String!, $number: Int!) {
-              organization(login: $org){
+              user(login: $org){
                 projectV2(number: $number) {
                   id
                   fields(first:20) {
@@ -41,21 +41,21 @@ jobs:
                   }
                 }
               }
-            }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+            }' -f org=$USER -F number=$PROJECT_NUMBER > project_data.json
 
-          echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
-          echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
+          echo 'PROJECT_ID='$(jq '.data.user.projectV2.id' project_data.json) >> $GITHUB_ENV
+          echo 'STATUS_FIELD_ID='$(jq '.data.user.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
 
       - name: Assigned Issue
         if: |
           github.event.action == 'assigned'
         run: |
-          echo 'TODO_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Todo") |.id' project_data.json) >> $GITHUB_ENV
+          echo 'TODO_OPTION_ID='$(jq '.data.user.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Todo") |.id' project_data.json) >> $GITHUB_ENV
       - name: PreRelease Issue
         if: |
           github.event.action == 'published'
         run: |
-          echo 'TODO_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="PreRelease") |.id' project_data.json) >> $GITHUB_ENV
+          echo 'TODO_OPTION_ID='$(jq '.data.user.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="PreRelease") |.id' project_data.json) >> $GITHUB_ENV
 
       - name: Add Issue to project
         env:
