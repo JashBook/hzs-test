@@ -1,4 +1,4 @@
-name: MOVE-ISSUES
+name: ISSUES-MOVE
 on:
   issues:
     types: [ assigned ]
@@ -16,7 +16,6 @@ jobs:
         env:
           ORGANIZATION: JashBook
           PROJECT_NUMBER: 3
-
         run: |
           gh api graphql -f query='
             query($org: String!, $number: Int!) {
@@ -53,14 +52,9 @@ jobs:
           echo 'TODO_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Todo") |.id' project_data.json) >> $GITHUB_ENV
       - name: PreRelease Issue
         if: |
-          github.event.action == 'published' && github.event.release.prerelease
+          github.event.action == 'published'
         run: |
           echo 'TODO_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="PreRelease") |.id' project_data.json) >> $GITHUB_ENV
-      - name: Released Issue
-        if: |
-          github.event.action == 'published' && !github.event.release.prerelease
-        run: |
-          echo 'TODO_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Released") |.id' project_data.json) >> $GITHUB_ENV
 
       - name: Add Issue to project
         env:
@@ -102,7 +96,7 @@ jobs:
               }
             }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.TODO_OPTION_ID }} --silent
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: |
           github.event.action == 'published'
 
@@ -112,10 +106,11 @@ jobs:
         run: |
           RELEASE_BODY=$(echo ${{ github.event.release.body }} | sed 's/"/\\"/g')
           cd ${{ github.workspace }}
-          bash ${{ github.workspace }}/.github/utils/issue-release.sh \
+          bash ${{ github.workspace }}/.github/utils/issue_prerelease.sh \
             ${{ env.GITHUB_TOKEN }} \
             ${{ github.repository }} \
             ${{ github.repository_owner }} \
-            $PROJECT_ID $STATUS_FIELD_ID \
+            $PROJECT_ID \
+            $STATUS_FIELD_ID \
             ${{ env.TODO_OPTION_ID }} \
             "${RELEASE_BODY}"
