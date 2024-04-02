@@ -105,7 +105,17 @@ jobs:
         if: |
           github.event.action == 'published'
         run: |
+          echo "1"
+          echo ""
+          echo "${{ github.event.release.body }}"
+           echo ""
+          echo ""
           RELEASE_BODY=$(echo "${{ github.event.release.body }}" | grep "https://github.com/${{ github.repository }}/pull")
+          echo "2"
+          echo ""
+          echo "${RELEASE_BODY}"
+          echo ""
+          echo ""
           cd ${{ github.workspace }}
           bash ${{ github.workspace }}/.github/utils/issue_prerelease.sh \
             ${{ env.GITHUB_TOKEN }} \
