@@ -1,0 +1,12 @@
+name: CICD-PULL-REQUEST-CHECK
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+
+jobs:
+  trigger-pr:
+    if: github.event.review.state == 'approved'
+    uses: ./.github/workflows/cicd-pull-request.yml
+    secrets: inherit
