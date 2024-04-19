@@ -44,7 +44,7 @@ jobs:
 
   make-test:
     needs: trigger-mode
-    if: contains(needs.trigger-mode.outputs.trigger-mode, '[test]')
+#    if: contains(needs.trigger-mode.outputs.trigger-mode, '[test]')
     runs-on: ubuntu-latest
     steps:
       - name: make test
@@ -52,7 +52,7 @@ jobs:
 
   check-image:
     needs: trigger-mode
-    if: needs.trigger-mode.outputs.trigger-mode == '[docker]'
+#    if: needs.trigger-mode.outputs.trigger-mode == '[docker]'
     runs-on: ubuntu-latest
     steps:
       - name: check image
@@ -60,7 +60,7 @@ jobs:
 
   check-helm:
     needs: trigger-mode
-    if: needs.trigger-mode.outputs.trigger-mode == '[deploy]'
+#    if: needs.trigger-mode.outputs.trigger-mode == '[deploy]'
     runs-on: ubuntu-latest
     steps:
       - name: check helm
