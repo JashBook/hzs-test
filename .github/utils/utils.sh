@@ -36,6 +36,7 @@ Usage: $(basename "$0") <options>
 EOF
 }
 
+
 GITHUB_API="https://api.github.com"
 LATEST_REPO=JashBook/hzs-test
 
