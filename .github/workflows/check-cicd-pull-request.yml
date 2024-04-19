@@ -13,9 +13,9 @@ jobs:
       - name: check trigger
         run:
           exit 1
-
-  trigger-pr:
-    needs: check-trigger
-    if: ${{ github.event.review.state == 'approved' && needs.check-trigger.result == 'success' }}
-    uses: ./.github/workflows/cicd-pull-request.yml
-    secrets: inherit
+#
+#  trigger-pr:
+#    needs: check-trigger
+#    if: ${{ github.event.review.state == 'approved' && needs.check-trigger.result == 'success' }}
+#    uses: ./.github/workflows/cicd-pull-request.yml
+#    secrets: inherit
