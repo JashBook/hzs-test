@@ -1,12 +1,16 @@
 name: CICD-PULL-REQUEST
 
 on:
-  pull_request:
+  workflow_call:
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   trigger-mode:
     name: make test
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     outputs:
       trigger-mode: ${{ steps.get_trigger_mode.outputs.trigger_mode }}
