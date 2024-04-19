@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: check trigger
         run:
-          exit 0
+          exit 1
 
   trigger-pr:
     needs: check-trigger
