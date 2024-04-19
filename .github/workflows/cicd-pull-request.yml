@@ -13,7 +13,8 @@ concurrency:
 jobs:
   trigger-mode:
     name: make test
-    if: github.event.review.state == 'approved'
+    #if: github.event.review.state == 'approved'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       trigger-mode: ${{ steps.get_trigger_mode.outputs.trigger_mode }}
