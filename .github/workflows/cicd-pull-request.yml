@@ -1,10 +1,9 @@
 name: CICD-PULL-REQUEST
 
 on:
-  workflow_run:
-    workflows: [CICD-PULL-REQUEST-CHECK]
-    types:
-      - completed
+  pull_request_target:
+    types: [labeled]
+
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -14,7 +13,7 @@ jobs:
   trigger-mode:
     name: make test
     #if: github.event.review.state == 'approved'
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.action == 'labeled' && github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     outputs:
       trigger-mode: ${{ steps.get_trigger_mode.outputs.trigger_mode }}
