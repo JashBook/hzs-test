@@ -6,7 +6,16 @@ on:
 
 
 jobs:
-  trigger-pr:
+  check-trigger:
     if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: check trigger
+        run:
+          exit 0
+
+  trigger-pr:
+    need: check-trigger
+    if: ${{ github.event.review.state == 'approved' && needs.check-trigger.result == 'success' }}
     uses: ./.github/workflows/cicd-pull-request.yml
     secrets: inherit
