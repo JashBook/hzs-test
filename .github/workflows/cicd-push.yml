@@ -39,7 +39,7 @@ env:
 jobs:
   container-test-job:
     runs-on: ubuntu-latest
-    container: centos:7.9
+    container: centos:7.9.2009
     steps:
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
