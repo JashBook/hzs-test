@@ -41,11 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     container: apecloud/centos-java:7.9-22.0.1
     steps:
+      - uses: actions/checkout@v4
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
 
       - name: Check for dockerenv file
         run: |
+          ln -s /opt/maven/bin/mvn /usr/local/bin/mvn
+          ln -s /opt/jdk/bin/java /usr/local/bin/java
           java -version
           mvn -version
 
