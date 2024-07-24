@@ -39,18 +39,10 @@ env:
 jobs:
   container-test-job:
     runs-on: ubuntu-latest
-    container: centos:7.9.2009
+    container: apecloud/centos-java:7.9-22.0.1
     steps:
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
-
-      - name: Set up JDK 22
-        id: setup-java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '22'
-          distribution: 'temurin'
-          cache: maven
 
       - name: Check for dockerenv file
         run: |
