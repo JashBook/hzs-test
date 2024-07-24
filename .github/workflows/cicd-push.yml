@@ -39,7 +39,8 @@ env:
 jobs:
   container-test-job:
     runs-on: ubuntu-latest
-    container: apecloud/centos-java:7.9-22.0.1
+    #container: apecloud/centos-java:7.9-22.0.1
+    container: centos:8
     steps:
       - uses: actions/checkout@v4
       - name: Check for dockerenv file
