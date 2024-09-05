@@ -3,6 +3,11 @@ name: CICD-PUSH
 on:
   workflow_dispatch:
     inputs:
+      RUNS_ON:
+        description: "runs on"
+        type: string
+        required: false
+        default: 'ubuntu-latest'
       KUBECTL_VERSION:
         description: "Install the specify version of kubectl"
         type: string
@@ -13,10 +18,10 @@ on:
         type: string
         required: false
         default: 'latest'
-  push:
-  release:
-    types:
-      - published
+#  push:
+#  release:
+#    types:
+#      - published
 #    branches:
 #      - '*'
 #      - '*/*'
@@ -37,21 +42,29 @@ env:
 
 
 jobs:
-  container-test-job:
-    runs-on: ubuntu-latest
-    #container: apecloud/centos-java:7.9-22.0.1
-    container: centos:8
+  test-runs-on:
+    runs-on: ${{ inputs.RUNS_ON }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Check for dockerenv file
-        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
-
       - name: Check for dockerenv file
         run: |
-          ln -s /opt/maven/bin/mvn /usr/local/bin/mvn
-          ln -s /opt/jdk/bin/java /usr/local/bin/java
-          java -version
-          mvn -version
+          echo "123"
+   
+
+#  container-test-job:
+#    runs-on: ubuntu-latest
+#    #container: apecloud/centos-java:7.9-22.0.1
+#    container: centos:8
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Check for dockerenv file
+#        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+#
+#      - name: Check for dockerenv file
+#        run: |
+#          ln -s /opt/maven/bin/mvn /usr/local/bin/mvn
+#          ln -s /opt/jdk/bin/java /usr/local/bin/java
+#          java -version
+#          mvn -version
 
 
 
