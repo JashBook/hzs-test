@@ -5,6 +5,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 jobs:
   cherry-pick:
@@ -17,16 +18,41 @@ jobs:
           token: ${{ env.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Get event json
-        run: |
-          cat "${GITHUB_EVENT_PATH}"
-
       - name: check PR title
         run: |
-          PR_TITLE="${{ github.event.issue.pull_request.title }}"
+          PR_TITLE="${{ github.event.issue.title }}"
+          echo "PR_TITLE: ${PR_TITLE}"
           if [[ "${PR_TITLE}" == "feat"* ]];then
               echo "$(tput -T xterm setaf 1)::error title=Cherry pick feat PR is not allowed! Please submit a PR if you need it. $(tput -T xterm sgr0)"
               exit 1
+          fi
+
+      - name: check change file
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          PR_NUMBER="${{ github.event.issue.number }}"
+          CHANGE_FILES=""
+          if [[ -n "${PR_NUMBER}" ]]; then
+              CHANGE_FILES=$(gh pr view ${PR_NUMBER} --json files --jq '.files[].path'  --repo ${{ github.repository }})
+              echo "CHANGE_FILES: ${CHANGE_FILES}"
+          fi
+          
+          if [[ -n "${CHANGE_FILES}" ]]; then
+              release_version="${COMMENT_BODY##*release-}"
+              release_version="${release_version/\./}"
+              check_version=$(printf "%05d" ${release_version})
+              for change_file in $(echo "${CHANGE_FILES}"); do
+                  if [[ "${change_file}" != "apiserver/pkg/migration/"* ]]; then
+                      continue
+                  fi
+                  migrate_version=$(echo "${change_file##*/}" | sed 's/^\(.\{5\}\).*/\1/')
+                  echo "migrate_version:${migrate_version}"
+          
+                  if (( $(echo "$check_version < $migrate_version" | bc -l) )); then
+                      echo "${change_file} is not allowed to ${COMMENT_BODY}"
+                      exit 1
+                  fi
+              done
           fi
 
       - name: Automatic Cherry Pick
