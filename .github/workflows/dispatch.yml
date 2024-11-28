@@ -19,6 +19,6 @@ jobs:
           echo "Input: ${{ inputs.some_input }}"
 
   call:
-    uses: ./.github/workflows/called.yml
+    uses: ./.github/workflows/call.yml
     with:
       some_input: ${{ inputs.some_input }}
