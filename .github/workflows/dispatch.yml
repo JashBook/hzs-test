@@ -1,0 +1,24 @@
+name: Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      some_input:
+        description: 'Some input'
+        required: false
+        default: 'dispatch'
+        type: string
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch
+        run: |
+          echo "Dispatch Event Name: $GITHUB_EVENT_NAME"
+          echo "Input: ${{ inputs.some_input }}"
+
+  call:
+    uses: ./.github/workflows/called.yml
+    with:
+      some_input: ${{ inputs.some_input }}
