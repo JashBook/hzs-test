@@ -1,0 +1,19 @@
+name: Call
+
+on:
+  workflow_call:
+    inputs:
+      some_input:
+        description: 'Some input'
+        required: false
+        default: 'call'
+        type: string
+
+jobs:
+  called-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Event Name
+        run: |
+          echo "Call Event Name: $GITHUB_EVENT_NAME"
+          echo "Input: ${{ inputs.some_input }}"
