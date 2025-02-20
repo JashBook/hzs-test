@@ -43,7 +43,24 @@ jobs:
       - uses: actions/checkout@v4
       - name: test-comment-cherry-pick
         run: |
-          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
+          echo "1"
+          locale -a
+          echo "=============================================================================="
+          echo "2"
+          sudo locale-gen zh_CN.UTF-8
+          sudo update-locale
+          echo "=============================================================================="
+          echo "3"
+          locale -a
+          echo "=============================================================================="
+          echo "4"
+          sudo dpkg-reconfigure locales
+          echo "=============================================================================="
+          echo "5"
+          locale -a
+          
+
+#          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
