@@ -38,30 +38,46 @@ env:
 
 jobs:
   test-comment-cherry-pick:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: test-comment-cherry-pick
+      - name: pg_dump version
         run: |
-          kubectl version
-          echo "=============================================================================="
+          pg_dump --version
+
+
+      - name: Install PostgreSQL 14 client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-14
+
+      - name: Verify pg_dump version
+        run: |
+          pg_dump --version
+            
           
-          
-          echo "1"
-          locale -a
-          echo "=============================================================================="
-          echo "2"
-          sudo locale-gen zh_CN.UTF-8
-          sudo update-locale
-          echo "=============================================================================="
-          echo "3"
-          locale -a
-          echo "=============================================================================="
-          echo "4"
-          sudo dpkg-reconfigure locales
-          echo "=============================================================================="
-          echo "5"
-          locale -a
+
+#      - uses: actions/checkout@v4
+#      - name: test-comment-cherry-pick
+#        run: |
+#          kubectl version
+#          echo "=============================================================================="
+#
+#
+#          echo "1"
+#          locale -a
+#          echo "=============================================================================="
+#          echo "2"
+#          sudo locale-gen zh_CN.UTF-8
+#          sudo update-locale
+#          echo "=============================================================================="
+#          echo "3"
+#          locale -a
+#          echo "=============================================================================="
+#          echo "4"
+#          sudo dpkg-reconfigure locales
+#          echo "=============================================================================="
+#          echo "5"
+#          locale -a
           
 
 #          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
