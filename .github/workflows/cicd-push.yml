@@ -43,7 +43,7 @@ jobs:
       - name: pg_dump version
         run: |
           pg_dump --version
-          exit 78
+          exit 0
 
 
       - name: Install PostgreSQL 14 client
