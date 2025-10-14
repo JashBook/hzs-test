@@ -37,40 +37,46 @@ env:
 
 
 jobs:
-  test-comment-cherry-pick:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: pg_dump version
-        id: check_stable_version
-        run: |
-          pg_dump --version
-          
-          RELEASE_VERSION="v1.0.2-alpha.1"
-          STABLE_RELEASE=0
-          if [[ "${RELEASE_VERSION}" =~ ^v[0-9]+(\.[0-9]+)*$ ]]; then
-              STABLE_RELEASE=1
-          fi
-          echo stable-release="$STABLE_RELEASE" >> $GITHUB_OUTPUT
-
-
-      - name: Install PostgreSQL 14 client
-        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client-14
-
-      - name: Verify pg_dump version
-        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
-        run: |
-          pg_dump --version
-            
-  release-addons-version-check:
-    needs: [test-comment-cherry-pick]
+  md5sum:
     runs-on: ubuntu-latest
     steps:
-      - name: check success
+      - name: md5sum
         run: |
-          echo "check success"
+          md5sum
+#  test-comment-cherry-pick:
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: pg_dump version
+#        id: check_stable_version
+#        run: |
+#          pg_dump --version
+#
+#          RELEASE_VERSION="v1.0.2-alpha.1"
+#          STABLE_RELEASE=0
+#          if [[ "${RELEASE_VERSION}" =~ ^v[0-9]+(\.[0-9]+)*$ ]]; then
+#              STABLE_RELEASE=1
+#          fi
+#          echo stable-release="$STABLE_RELEASE" >> $GITHUB_OUTPUT
+#
+#
+#      - name: Install PostgreSQL 14 client
+#        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install -y postgresql-client-14
+#
+#      - name: Verify pg_dump version
+#        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
+#        run: |
+#          pg_dump --version
+#
+#  release-addons-version-check:
+#    needs: [test-comment-cherry-pick]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: check success
+#        run: |
+#          echo "check success"
 
 #      - uses: actions/checkout@v4
 #      - name: test-comment-cherry-pick
