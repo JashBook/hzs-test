@@ -48,7 +48,9 @@ jobs:
           override: true
 
       - name: Install cross
-        run: cargo install cross --version "<=0.2.0"
+        run: |
+          cargo search cross --limit 20
+          cargo install cross --version "0.1.16"
 
 #  md5sum:
 #    runs-on: ubuntu-latest
