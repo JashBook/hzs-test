@@ -37,12 +37,25 @@ env:
 
 
 jobs:
-  md5sum:
+  cross-build:
+    name: Cross build
     runs-on: ubuntu-latest
     steps:
-      - name: md5sum
-        run: |
-          md5sum
+      - name: Set up rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.87.0
+          override: true
+
+      - name: Install cross
+        run: cargo install cross
+
+#  md5sum:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: md5sum
+#        run: |
+#          md5sum
 #  test-comment-cherry-pick:
 #    runs-on: ubuntu-22.04
 #    steps:
