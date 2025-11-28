@@ -37,20 +37,28 @@ env:
 
 
 jobs:
-  cross-build:
-    name: Cross build
+  fix-exit-1:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.86.0
-          override: true
-
       - name: Install cross
         run: |
-          cargo search cross --limit 20
-          cargo install cross --version "0.1.16"
+          echo "1"
+          echo "$(tput -T xterm setaf 3)change kubeblocks-cloud image version:${CLOUD_VERSION}$(tput -T xterm sgr0)"
+          echo "2"
+
+#  cross-build:
+#    name: Cross build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Set up rust
+#        uses: actions-rs/toolchain@v1
+#        with:
+#          toolchain: 1.86.0
+#          override: true
+#
+#      - name: Install cross
+#        run: |
+#          cargo install cross --version 0.1.16
 
 #  md5sum:
 #    runs-on: ubuntu-latest
