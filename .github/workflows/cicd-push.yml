@@ -37,14 +37,25 @@ env:
 
 
 jobs:
-  fix-exit-1:
+  check-commit-message:
     runs-on: ubuntu-latest
     steps:
-      - name: Install cross
-        run: |
-          echo "1"
-          echo "$(tput -T xterm setaf 3)change kubeblocks-cloud image version:${CLOUD_VERSION}$(tput -T xterm sgr0)"
-          echo "2"
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit message
+        id: check_commit_message
+        run: |        
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          if [[ "$COMMIT_MESSAGE" == "chore: auto update manifests file version to"* ]]; then
+            echo "is_auto_update_manifests=true"
+            exit 0
+          else
+            echo "is_auto_update_manifests=false"
+            exit 1
+          fi
 
 #  cross-build:
 #    name: Cross build
