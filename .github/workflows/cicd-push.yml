@@ -49,6 +49,7 @@ jobs:
         id: check_commit_message
         run: |        
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          echo "COMMIT_MESSAGE: ${COMMIT_MESSAGE}"
           if [[ "$COMMIT_MESSAGE" == "chore: auto update manifests file version to"* ]]; then
             echo "is_auto_update_manifests=true"
             exit 0
