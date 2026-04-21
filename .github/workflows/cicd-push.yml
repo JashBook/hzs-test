@@ -37,26 +37,38 @@ env:
 
 
 jobs:
-  check-commit-message:
+  free-disk:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: free disk
+        run: |
+          sudo apt-get autoremove -y >/dev/null 2>&1
+          sudo apt-get autoclean -y >/dev/null 2>&1
+          sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          df -h
 
-      - name: Check commit message
-        id: check_commit_message
-        run: |        
-          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
-          echo "COMMIT_MESSAGE: ${COMMIT_MESSAGE}"
-          if [[ "$COMMIT_MESSAGE" == "chore: auto update manifests file version to"* ]]; then
-            echo "is_auto_update_manifests=true"
-            exit 0
-          else
-            echo "is_auto_update_manifests=false"
-            exit 1
-          fi
+#  check-commit-message:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Check commit message
+#        id: check_commit_message
+#        run: |
+#          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+#          echo "COMMIT_MESSAGE: ${COMMIT_MESSAGE}"
+#          if [[ "$COMMIT_MESSAGE" == "chore: auto update manifests file version to"* ]]; then
+#            echo "is_auto_update_manifests=true"
+#            exit 0
+#          else
+#            echo "is_auto_update_manifests=false"
+#            exit 1
+#          fi
 
 #  cross-build:
 #    name: Cross build
