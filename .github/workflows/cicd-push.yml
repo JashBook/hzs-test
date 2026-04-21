@@ -38,15 +38,21 @@ env:
 
 jobs:
   free-disk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: free disk
         run: |
+          df -h
           sudo apt-get autoremove -y >/dev/null 2>&1
+          echo "sudo apt-get autoremove -y >/dev/null 2>&1"
           sudo apt-get autoclean -y >/dev/null 2>&1
+          echo "sudo apt-get autoclean -y >/dev/null 2>&1"
           sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
+          echo "sudo rm -rf /usr/local/lib/android >/dev/null 2>&1"
           sudo swapoff -a
+          echo "sudo swapoff -a"
           sudo rm -f /swapfile
+          echo "sudo rm -f /swapfile"
           df -h
 
 #  check-commit-message:
