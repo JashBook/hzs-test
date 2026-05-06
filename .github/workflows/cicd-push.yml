@@ -37,13 +37,144 @@ env:
 
 
 jobs:
-  test-comment-cherry-pick:
-    runs-on: ubuntu-latest
+  free-disk-2:
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: test-comment-cherry-pick
-        run: |
-          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+          swap-storage: true
+
+#  free-disk:
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: free disk
+#        run: |
+#          df -h
+#          sudo apt-get autoremove -y >/dev/null 2>&1
+#          echo "sudo apt-get autoremove -y >/dev/null 2>&1"
+#          sudo apt-get autoclean -y >/dev/null 2>&1
+#          echo "sudo apt-get autoclean -y >/dev/null 2>&1"
+#          sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
+#          echo "sudo rm -rf /usr/local/lib/android >/dev/null 2>&1"
+#          sudo swapoff -a
+#          echo "sudo swapoff -a"
+#          sudo rm -f /swapfile
+#          echo "sudo rm -f /swapfile"
+#          df -h
+
+#  check-commit-message:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Check commit message
+#        id: check_commit_message
+#        run: |
+#          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+#          echo "COMMIT_MESSAGE: ${COMMIT_MESSAGE}"
+#          if [[ "$COMMIT_MESSAGE" == "chore: auto update manifests file version to"* ]]; then
+#            echo "is_auto_update_manifests=true"
+#            exit 0
+#          else
+#            echo "is_auto_update_manifests=false"
+#            exit 1
+#          fi
+
+#  cross-build:
+#    name: Cross build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Set up rust
+#        uses: actions-rs/toolchain@v1
+#        with:
+#          toolchain: 1.86.0
+#          override: true
+#
+#      - name: Install cross
+#        run: |
+#          cargo install cross --version 0.1.16
+
+#  md5sum:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: md5sum
+#        run: |
+#          md5sum
+#  test-comment-cherry-pick:
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: pg_dump version
+#        id: check_stable_version
+#        run: |
+#          pg_dump --version
+#
+#          RELEASE_VERSION="v1.0.2-alpha.1"
+#          STABLE_RELEASE=0
+#          if [[ "${RELEASE_VERSION}" =~ ^v[0-9]+(\.[0-9]+)*$ ]]; then
+#              STABLE_RELEASE=1
+#          fi
+#          echo stable-release="$STABLE_RELEASE" >> $GITHUB_OUTPUT
+#
+#
+#      - name: Install PostgreSQL 14 client
+#        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install -y postgresql-client-14
+#
+#      - name: Verify pg_dump version
+#        if: ${{ steps.check_stable_version.outputs.stable-release == '1' }}
+#        run: |
+#          pg_dump --version
+#
+#  release-addons-version-check:
+#    needs: [test-comment-cherry-pick]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: check success
+#        run: |
+#          echo "check success"
+
+#      - uses: actions/checkout@v4
+#      - name: test-comment-cherry-pick
+#        run: |
+#          kubectl version
+#          echo "=============================================================================="
+#
+#
+#          echo "1"
+#          locale -a
+#          echo "=============================================================================="
+#          echo "2"
+#          sudo locale-gen zh_CN.UTF-8
+#          sudo update-locale
+#          echo "=============================================================================="
+#          echo "3"
+#          locale -a
+#          echo "=============================================================================="
+#          echo "4"
+#          sudo dpkg-reconfigure locales
+#          echo "=============================================================================="
+#          echo "5"
+#          locale -a
+          
+
+#          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
