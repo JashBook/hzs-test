@@ -13,10 +13,6 @@ on:
         type: string
         required: false
         default: 'latest'
-  push:
-  release:
-    types:
-      - published
 #    branches:
 #      - '*'
 #      - '*/*'
