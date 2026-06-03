@@ -39,7 +39,7 @@ jobs:
     steps:
 
       - name: Install skopeo
-        run: apt install skopeo
+        run: sudo apt install skopeo
 
       - name: skopeo help
         run: |
