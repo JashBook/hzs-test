@@ -33,13 +33,25 @@ env:
 
 
 jobs:
-  test-comment-cherry-pick:
+
+  skope:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: test-comment-cherry-pick
+
+      - name: Install skopeo
+        run: apt install skopeo
+
+      - name: skopeo help
         run: |
-          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
+          skopeo help
+
+#  test-comment-cherry-pick:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: test-comment-cherry-pick
+#        run: |
+#          sudo bash ${{ github.workspace }}/.github/utils/compress_build.sh
 #          yq --version
 #          yq --help
 #          echo "test-comment-cherry-pick1"
